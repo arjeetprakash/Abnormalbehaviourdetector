@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abnormal Behavior Detection</title>
+    <link rel="stylesheet" href="/static/style.css?v=2">
+</head>
+<body>
+    <main class="container">
+        <header class="app-header">
+            <div class="brand-mark" aria-hidden="true">AB</div>
+            <div class="brand-copy">
+                <strong>Behavior Lab</strong>
+                <span>Local vision workspace</span>
+            </div>
+            <div class="system-status"><span></span> SYSTEM READY</div>
+        </header>
+
+        <section class="hero">
+            <div class="eyebrow"><span></span> AI VIDEO ANALYSIS</div>
+            <h1>See the movement<br><em>behind the result.</em></h1>
+            <p>Load a video to inspect its pose landmarks frame-by-frame, then run the trained GRU model for a normal or abnormal activity assessment.</p>
+        </section>
+
+        <section class="card">
+            <form id="uploadForm">
+                <label class="dropzone" for="videoInput">
+                    <div class="upload-icon" aria-hidden="true"><span>↥</span></div>
+                    <div class="upload-copy">
+                        <span class="section-kicker"></span>
+                        <h2>Drop a video to begin</h2>
+                        <p>MP4, AVI, MOV or MKV <span class="dot-divider">•</span> Up to 500 MB</p>
+                    </div>
+                    <span id="fileName">Choose a video file <b>Browse</b></span>
+                    <input id="videoInput" name="video" type="file" accept="video/mp4,video/avi,video/quicktime,.mkv" required>
+                </label>
+
+                <div id="videoWorkspace" class="video-workspace" hidden>
+                    <div class="video-header">
+                        <div>
+                            <span class="section-kicker">LIVE VIEW</span>
+                            <strong>Pose visualization</strong>
+                            <span>Landmarks follow the subject as the video plays.</span>
+                        </div>
+                        <div class="live-pill"><span></span> LIVE POSE</div>
+                    </div>
+
+                    <div class="video-stage">
+                        <video id="preview" controls playsinline></video>
+                        <canvas id="landmarkCanvas"></canvas>
+                        <div id="poseLoading" class="pose-loading">Loading pose tracker…</div>
+                    </div>
+
+                    <div class="video-stats">
+                        <div><span>Current frame</span><strong id="currentFrame">0 / —</strong></div>
+                        <div><span>Total frames</span><strong id="videoFrames">—</strong></div>
+                        <div><span>FPS</span><strong id="videoFps">—</strong></div>
+                        <div><span>Duration</span><strong id="videoDuration">—</strong></div>
+                        <div><span>Pose landmarks</span><strong id="livePoseStatus">Waiting</strong></div>
+                    </div>
+                </div>
+
+                <button id="analyzeBtn" type="submit"><span>Run behavior analysis</span><b aria-hidden="true">→</b></button>
+            </form>
+
+            <div id="status" class="status" hidden></div>
+
+            <section id="result" class="result" hidden>
+                <div class="result-heading">
+                    <div>
+                        <span class="section-kicker">MODEL OUTPUT</span>
+                        <div id="resultBadge" class="result-badge">RESULT</div>
+                    </div>
+                    <span class="result-spark" aria-hidden="true"></span>
+                </div>
+                <h2 id="prediction">—</h2>
+                <div class="confidence">
+                    <div class="confidence-header"><span>Confidence</span><strong id="confidenceValue">0%</strong></div>
+                    <div class="bar"><div id="confidenceBar"></div></div>
+                </div>
+                <div class="details">
+                    <div><span>Frames analyzed</span><strong id="frames">—</strong></div>
+                    <div><span>Pose detected</span><strong id="poseRate">—</strong></div>
+                    <div><span>Model input</span><strong id="shape">300 × 132</strong></div>
+                    <div><span>Threshold</span><strong>0.50</strong></div>
+                </div>
+            </section>
+        </section>
+
+        <footer>GRU-based abnormal behavior classification • 300 × 132 temporal input</footer>
+    </main>
+    <script type="module" src="/static/script.js"></script>
+</body>
+</html>
